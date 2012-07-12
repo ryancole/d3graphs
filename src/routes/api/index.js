@@ -1,13 +1,47 @@
 
+var models = require('../../models');
+
+
 var ApiRouter = module.exports = function (server) {
     
+    // store web server reference
     this.server = server;
-    this.server.get('/:id', this.view);
+    
+    // get route handlers
+    this.server.get('/api/series', this.list);
+    this.server.get('/api/series/:id', this.view);
+    
+    // post route handlers
+    this.server.post('/api/series', this.create);
+    
+};
+
+ApiRouter.prototype.list = function (req, res) {
+    
+    models.series.find({}, function (err, series) {
+        
+        return res.json(series);
+        
+    });
     
 };
 
 ApiRouter.prototype.view = function (req, res) {
     
-    return res.render('channel/view');
+    models.series.get({}, function (err, series) {
+        
+        return res.json(series);
+        
+    });
+    
+};
+
+ApiRouter.prototype.create = function (req, res) {
+    
+    models.series.create(req.body, function (err, series) {
+        
+        return res.send(201, series);
+        
+    });
     
 };
