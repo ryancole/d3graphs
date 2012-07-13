@@ -28,7 +28,7 @@ ApiRouter.prototype.list = function (req, res) {
 
 ApiRouter.prototype.view = function (req, res) {
     
-    models.series.get({}, function (err, series) {
+    models.series.get({ _id: req.params.id }, function (err, series) {
         
         return res.json(series);
         
@@ -40,7 +40,7 @@ ApiRouter.prototype.create = function (req, res) {
     
     models.series.create(req.body, function (err, series) {
         
-        return res.send(201, series);
+        return res.send(201);
         
     });
     
