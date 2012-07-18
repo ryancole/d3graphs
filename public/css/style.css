@@ -10,14 +10,17 @@ body {
     
 }
 
-.chart span {
-    
-    margin-left: 15px;
-    
-}
-
 #header {
     
     text-align: center;
+    
+}
+
+#charts .chart {
+    
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    list-style-type: none;
     
 }

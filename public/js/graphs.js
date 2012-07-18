@@ -41,16 +41,33 @@ function GetMax(collection, attribute) {
 function BuildChart (key, values) {
     
     // insert dom element for this graph
-    $('<span>').appendTo($('<li>', {
+    $('<div>').appendTo($('<li>', {
         
         'class': 'chart',
-        'data-title': key,
-        text: key + ':'
+        'data-title': key
         
     }).appendTo('#charts'));
-    
+
     // sparkline dat shit
-    $("li[data-title='" + key + "'] span").sparkline(values);
+    $.jqplot("li[data-title='" + key + "'] div", [values], {
+        
+        title: key,
+        series: [{ showMarker: false }],
+        axes: {
+            xaxis: {
+                min: GetMin(values, 0),
+                label: 'Timestamp',
+                renderer: $.jqplot.DateAxisRenderer,
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                tickOptions: { formatString: '%a, %R' },
+            },
+            yaxis: {
+                label: 'Gold',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            }
+        }
+        
+    });
    
 };
 
@@ -85,8 +102,7 @@ function BuildAggregates (data) {
             // format string for the quality and item
             var item_plus_quality = (data.quality + ' ' + data.item).trim();
             
-            // aggregate_view[data.item].push({ gold: data.gold, timestamp: timestamp });
-            aggregate_view[item_plus_quality].push(data.gold);
+            aggregate_view[item_plus_quality].push([ timestamp, data.gold ]);
             
         });
         
