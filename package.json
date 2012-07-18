@@ -1,0 +1,20 @@
+{
+    "author": "Ryan Cole <ryan@rycole.com> (https://github.com/ryancole)",
+    "name": "d3graphs",
+    "description": "Graphs of Diablo III auction house data",
+    "version": "0.0.1",
+    "homepage": "https://github.com/ryancole/d3graphs",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ryancole/d3graphs.git"
+    },
+    "dependencies": {
+        "redis": "*",
+        "mongodb": "*",
+        "express": "*",
+        "jade": "*"
+    },
+    "engines": {
+        "node": "*"
+    }
+}

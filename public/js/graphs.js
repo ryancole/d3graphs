@@ -144,6 +144,9 @@ $(function () {
             // build the chart dom element
             BuildChart(key, value);
             
+            // delete the loading spinner
+            $('.spinner').remove();
+            
         });
         
     });
