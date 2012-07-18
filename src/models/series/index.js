@@ -1,7 +1,8 @@
 
-var SeriesModel = module.exports = function (mongodb_connection) {
+var SeriesModel = module.exports = function (mongodb_connection, redis_connection) {
     
     this.db = mongodb_connection;
+    this.cache = redis_connection;
     
 };
 
@@ -21,15 +22,28 @@ SeriesModel.prototype.get = function (spec, callback) {
 
 SeriesModel.prototype.find = function (spec, callback) {
     
-    this.db.collection('series', function (err, series) {
+    // get the data from the cache
+    this.cache.get('d3data', function (err, data) {
         
-        series.find(spec, { limit: 10, sort: { _id: -1 }}).toArray(function (err, series) {
-            
-            return callback(null, series);
-            
-        });
+        if (data)
+            return callback(null, JSON.parse(data));
         
-    });
+        // no cache data, get it from the database
+        this.db.collection('series', function (err, series) {
+        
+            series.find(spec, { limit: 1000, sort: { _id: -1 }}).toArray(function (err, series) {
+                
+                // cache the data
+                this.cache.setex('d3data', 60, JSON.stringify(series));
+                
+                // return the data
+                return callback(null, series);
+                
+            }.bind(this));
+            
+        }.bind(this));
+        
+    }.bind(this));
     
 };
 
