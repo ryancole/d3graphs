@@ -2,3 +2,22 @@
 body {
     font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
+
+.container {
+    
+    width: 600px;
+    margin: 0px auto;
+    
+}
+
+.chart span {
+    
+    margin-left: 15px;
+    
+}
+
+#header {
+    
+    text-align: center;
+    
+}

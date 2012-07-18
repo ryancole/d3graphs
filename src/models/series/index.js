@@ -23,7 +23,7 @@ SeriesModel.prototype.find = function (spec, callback) {
     
     this.db.collection('series', function (err, series) {
         
-        series.find(spec).toArray(function (err, series) {
+        series.find(spec, { limit: 10, sort: { _id: -1 }}).toArray(function (err, series) {
             
             return callback(null, series);
             
@@ -34,6 +34,13 @@ SeriesModel.prototype.find = function (spec, callback) {
 };
 
 SeriesModel.prototype.create = function (spec, callback) {
+    
+    // convert timestamp to date object
+    spec.forEach(function (value, index, array) {
+        
+        array[index].timestamp = new Date(value.timestamp);
+        
+    });
     
     this.db.collection('series', function (err, series) {
         

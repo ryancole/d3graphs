@@ -1,11 +1,57 @@
 
+// get min
+function GetMin(collection, attribute) {
+    
+    // get the minimum value
+    var min_value = _.reduce(collection, function (memo, record) {
+        
+        // return the lower value if available
+        if (record[attribute] < memo)
+            return record[attribute];
+        
+        // return same value
+        return memo;
+        
+    }, collection[0][attribute]);
+    
+    return min_value;
+    
+}
+
+// get max
+function GetMax(collection, attribute) {
+    
+    // get the maximum value
+    var max_value = _.reduce(collection, function (memo, record) {
+        
+        // return the higher value if available
+        if (record[attribute] > memo)
+            return record[attribute];
+        
+        // return same value
+        return memo;
+        
+    }, collection[0][attribute]);
+    
+    return max_value;
+    
+}
+
 // build a chart for a set of data
-function BuildChart (key, value) {
+function BuildChart (key, values) {
     
-    var max = d3.max(value),
-        scale_x = d3.scale.linear().domain([0, data.length - 1]).range [0, w],
-        scale_y = d3.scale.linear().domain([0, max]).range [h, 0];
+    // insert dom element for this graph
+    $('<span>').appendTo($('<li>', {
+        
+        'class': 'chart',
+        'data-title': key,
+        text: key + ':'
+        
+    }).appendTo('#charts'));
     
+    // sparkline dat shit
+    $("li[data-title='" + key + "'] span").sparkline(values);
+   
 };
 
 // build the collection of aggregate views
@@ -19,7 +65,11 @@ function BuildAggregates (data) {
         
         _.each(data.data, function (data) {
             
-            aggregate_view[data.item] = new Array;
+            // format string for the quality and item
+            var item_plus_quality = (data.quality + ' ' + data.item).trim();
+            
+            // init the collection for this item quality
+            aggregate_view[item_plus_quality] = new Array;
             
         });
         
@@ -28,9 +78,15 @@ function BuildAggregates (data) {
     // insert values into each item type array
     _.each(data, function (data) {
         
+        var timestamp = new Date(data.timestamp);
+        
         _.each(data.data, function (data) {
             
-            aggregate_view[data.item].push(data.gold);
+            // format string for the quality and item
+            var item_plus_quality = (data.quality + ' ' + data.item).trim();
+            
+            // aggregate_view[data.item].push({ gold: data.gold, timestamp: timestamp });
+            aggregate_view[item_plus_quality].push(data.gold);
             
         });
         
@@ -46,7 +102,7 @@ function GetGraphData (callback) {
     
     $.getJSON('/api/series', function (data) {
         
-        return callback(data);
+        return callback(data.reverse());
         
     });
     
@@ -63,6 +119,7 @@ $(function () {
         // build the charts
         _.each(aggregate_data, function (value, key, list) {
             
+            // build the chart dom element
             BuildChart(key, value);
             
         });
