@@ -65,8 +65,12 @@ function BuildChart (key, values) {
                 tickOptions: { formatString: '%a, %R' },
             },
             yaxis: {
+                min: 0,
                 label: 'Gold',
-                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+                tickOptions: {
+                    formatString: '%d'
+                }
             }
         },
         cursor:{ 
