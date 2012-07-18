@@ -52,7 +52,10 @@ function BuildChart (key, values) {
     $.jqplot("li[data-title='" + key + "'] div", [values], {
         
         title: key,
-        series: [{ showMarker: false }],
+        series: [{
+            showMarker: false,
+            neighborThreshold: -1
+            }],
         axes: {
             xaxis: {
                 min: GetMin(values, 0),
@@ -65,6 +68,11 @@ function BuildChart (key, values) {
                 label: 'Gold',
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             }
+        },
+        cursor:{ 
+            show: true,
+            zoom: true, 
+            showTooltip: false
         }
         
     });
