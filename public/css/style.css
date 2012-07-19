@@ -42,15 +42,17 @@ body, h1, p, ul, li {
     
 }
 
-#navigation li {
+#navigation li.region {
     
+    font-weight: 600;
+    color: white;
     padding: 5px;
     font-size: 0.8em;
     border-radius: 2px;
     display: inline-block;
     background-color: #1a89fd;
     box-shadow: 1px 1px 1px #666;
-    text-shadow: 1px 1px 1px #ccc;
+    text-shadow: 1px 1px 1px #01254b;
     
 }
 
