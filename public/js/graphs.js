@@ -114,7 +114,8 @@ function BuildAggregates (data) {
             // format string for the quality and item
             var item_plus_quality = (data.quality + ' ' + data.item).trim();
             
-            aggregate_view[item_plus_quality].push([ timestamp, data.gold ]);
+            if (data.gold > 0)
+                aggregate_view[item_plus_quality].push([ timestamp, data.gold ]);
             
         });
         
