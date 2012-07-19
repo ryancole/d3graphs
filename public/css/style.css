@@ -34,6 +34,26 @@ body, h1, p, ul, li {
     list-style-type: none;
 }
 
+#navigation {
+    
+    margin: 20px 0px;
+    text-align: center;
+    list-style-type: none;
+    
+}
+
+#navigation li {
+    
+    padding: 5px;
+    font-size: 0.8em;
+    border-radius: 2px;
+    display: inline-block;
+    background-color: #1a89fd;
+    box-shadow: 1px 1px 1px #666;
+    text-shadow: 1px 1px 1px #ccc;
+    
+}
+
 #footer {
     
     color: #666;
